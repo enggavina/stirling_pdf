@@ -2,7 +2,7 @@ services:
   - type: web
     name: stirling-pdf
     runtime: docker
-    plan: free
+    plan: starter
     dockerfilePath: ./Dockerfile
     autoDeploy: true
     healthCheckPath: /api/v1/health
@@ -15,11 +15,9 @@ services:
         value: "0.0.0.0"
       - key: SECURITY_ENABLELOGIN
         value: "false"
-      - key: DISABLE_ADDITIONAL_FEATURES
-        value: "true"
       - key: LANGS
         value: pt_BR
-      - key: JAVA_TOOL_OPTIONS
-        value: "-XX:+ExitOnOutOfMemoryError -Djava.awt.headless=true -XX:InitialRAMPercentage=10 -XX:MaxRAMPercentage=35 -XX:MaxMetaspaceSize=64m"
-      - key: ENDPOINTS_GROUPSTOREMOVE
-        value: "LibreOffice"
+    disk:
+      name: stirling-configs
+      mountPath: /configs
+      sizeGB: 1

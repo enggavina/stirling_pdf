@@ -8,8 +8,6 @@ services:
       - "8080:8080"
     environment:
       SECURITY_ENABLELOGIN: "false"
-      DISABLE_ADDITIONAL_FEATURES: "true"
-      ENDPOINTS_GROUPSTOREMOVE: LibreOffice
       LANGS: pt_BR
     volumes:
       - ./stirling-data/configs:/configs

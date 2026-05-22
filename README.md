@@ -8,11 +8,10 @@ Exemplo de rota:
 
 ## O que foi preparado
 
-- `Dockerfile` usando a imagem oficial `stirlingtools/stirling-pdf:latest-ultra-lite`
-- `render.yaml` com deploy via Docker e healthcheck para tentar rodar no plano free do Render
+- `Dockerfile` usando a imagem oficial `stirlingtools/stirling-pdf:latest`
+- `render.yaml` com deploy via Docker, healthcheck e disco persistente em `/configs`
 - `compose.yaml` para testar localmente
 - Configuracao sem login (`SECURITY_ENABLELOGIN=false`) para facilitar uso via API
-- Modo reduzido com `DISABLE_ADDITIONAL_FEATURES=true` e remocao do grupo `LibreOffice`
 
 ## Teste local
 
@@ -57,8 +56,7 @@ O arquivo ja define:
 - runtime Docker
 - healthcheck em `/api/v1/health`
 - `PORT` e `SERVER_PORT` em `10000`
-- plano `free`
-- modo ultra-lite
+- disco persistente em `/configs`
 
 ### Opcao 2: Web Service manual
 
@@ -84,11 +82,18 @@ LANGS=pt_BR
 /api/v1/health
 ```
 
+7. Adicione um Persistent Disk:
+
+```text
+Mount Path: /configs
+Size: 1 GB
+```
+
 ## Observacoes importantes
 
-- No Render Free, nao existe persistent disk. Toda configuracao local e efemera e pode ser perdida a cada restart ou redeploy.
+- O disco persistente do Render e importante para manter configuracoes e banco local do Stirling entre deploys.
+- Em Render, disco persistente exige plano pago para Web Service.
 - O Stirling expoe a documentacao local da API em `/swagger-ui.html`.
-- Esta configuracao tenta reduzir uso de memoria com a imagem `ultra-lite` e removendo funcionalidades dependentes de LibreOffice.
 - O endpoint `/api/v1/convert/pdf/img` recebe upload `multipart/form-data`. Voce pode validar o formato exato no Swagger depois do deploy.
 
 ## Exemplo de chamada
