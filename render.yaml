@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: stirling-pdf
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: SERVER_PORT
+        value: "10000"
+      - key: SERVER_ADDRESS
+        value: "0.0.0.0"
+      - key: SECURITY_ENABLELOGIN
+        value: "false"
+      - key: LANGS
+        value: pt_BR
+    disk:
+      name: stirling-configs
+      mountPath: /configs
+      sizeGB: 1

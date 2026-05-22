@@ -1,0 +1,17 @@
+services:
+  stirling-pdf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stirling-pdf
+    ports:
+      - "8080:8080"
+    environment:
+      SECURITY_ENABLELOGIN: "false"
+      LANGS: pt_BR
+    volumes:
+      - ./stirling-data/configs:/configs
+      - ./stirling-data/logs:/logs
+      - ./stirling-data/pipeline:/pipeline
+      - ./stirling-data/tessdata:/usr/share/tessdata
+    restart: unless-stopped
